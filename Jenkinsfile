@@ -23,6 +23,12 @@ pipeline {
                 sh 'zip -r ./* --exclude=.git --exclude=.zip'
             }
         }
+        stage('Publish Artifact') {
+            steps {
+                sh 'ls -ltr'
+                sh 'zip -r catalogue.zip ./* --exclude=.git --exclude=.zip'
+            }
+        }
     }
     post{
         always{
