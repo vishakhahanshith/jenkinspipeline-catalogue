@@ -12,15 +12,21 @@ pipeline {
             }
         }
         // sonar-scanner command expects sonar-project.properties should be available 
-        stage('Sonar Scan') {
+        // stage('Sonar Scan') {
+        //     steps {
+        //         sh "sonar-scanner"
+        //     }
+        // }
+        stage('Build') {
             steps {
-                sh "sonar-scanner"
+                sh 'ls -ltr'
             }
         }
-        stage('Deploy') {
-            steps {
-                echo "Deployment"
-            }
+    }
+    post{
+        always{
+            echo 'cleaning up workspace'
+            deleteDir()
         }
     }
 }
