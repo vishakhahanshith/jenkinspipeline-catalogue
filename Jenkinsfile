@@ -25,8 +25,23 @@ pipeline {
         }
         stage('Publish Artifact') {
             steps {
-                sh 'ls -ltr'
-                sh 'zip -r catalogue.zip ./* --exclude=.git --exclude=.zip'
+                //sh 'ls -ltr'
+                //sh 'zip -r catalogue.zip ./* --exclude=.git --exclude=.zip'
+                nexusArtifactUploader(
+                    nexusVersion: 'nexus3',
+                    protocol: 'http',
+                    nexusUrl: 'my.nexus.address',
+                    groupId: 'com.roboshop',
+                    version: '1.0.0',
+                    repository: 'catalogue',
+                    credentialsId: 'nexus-auth', //This we have created in Jenkins
+                    artifacts: [
+                        [artifactId: catalogue,
+                            classifier: '',
+                            file: 'catalogue.zip', //my-service-' + version + '.jar'
+                            type: 'zip']
+        ]
+     )
             }
         }
     }
